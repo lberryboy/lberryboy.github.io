@@ -159,8 +159,8 @@
     var retinaLogos = function() {
         var retina = window.devicePixelRatio > 1 ? true : false;
           if(retina) {
-              $('.header__logo').find('img').attr( {src:'assets/images/logo/logo@2x.png',width:'157',height:'30'} );
-              $('.logo_footer').find('img').attr( {src:'assets/images/logo/logo2@2x.png',width:'230',height:'44'} );
+              $('.header__logo').find('img').attr( {src:'/assets/images/logo/logo@2x.png',width:'157',height:'30'} );
+              $('.logo_footer').find('img').attr( {src:'/assets/images/logo/logo2@2x.png',width:'230',height:'44'} );
             }   
       };
 
