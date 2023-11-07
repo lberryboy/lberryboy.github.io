@@ -31,37 +31,14 @@
           var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
           var fullURL = proxyURL + encodeURIComponent(link);
 
-          fetch(fullURL)
-            .then(function (response) {
-              return response.text();
-            })
-            .then(function (text) {
-              document.open();
-              document.write(text);
-              document.close();
-            });
-
-          // Update all image sources to use the proxy URL
-          var images = document.querySelectorAll('img');
-          images.forEach(function (image) {
-            if (image.src) {
-              image.src = new URL(image.src, link).href;
-              image.src = proxyURL + image.src;
-            }
-          });
-
-          // Prevent the page from navigating away
-          window.onbeforeunload = function (e) {
-            e.preventDefault();
-            alert("Navigation prevented: " + e.toString());
-          };
-
-          // Handle hash changes by redirecting through the proxy
-          function locationHashChanged(e) {
-            e.preventDefault();
-            window.location = fullURL;
+          // Open the website in a new tab with a blank page
+          window.open('about:blank', '_blank');
+          var newTab = window.open();
+          if (newTab) {
+            newTab.location.href = fullURL;
+          } else {
+            alert('Your browser blocked opening a new tab. Please allow pop-ups.');
           }
-          window.onhashchange = locationHashChanged;
         }
       }
 
