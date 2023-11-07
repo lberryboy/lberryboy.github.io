@@ -1,1 +1,89 @@
-<div class="col-lg-2 col-md-12"> <div class="grid-box"> <a href="/go/retro-bowl.html"> <div class="image"> <img src="https://bonbang.github.io/img/retro-bowl.png" > </div> </a> </div> </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Proxy Loader</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+    }
+    .bottom-left {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bottom-left">
+  </div>
+  <script>
+    (function () {
+      function loadWebsite() {
+        var link = prompt("Enter the URL:");
+        if (link) {
+          var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
+          var fullURL = proxyURL + encodeURIComponent(link);
+
+          fetch(fullURL)
+            .then(function (response) {
+              return response.text();
+            })
+            .then(function (text) {
+              document.open();
+              document.write(text);
+              document.close();
+            });
+
+          // Update all image sources to use the proxy URL
+          var images = document.querySelectorAll('img');
+          images.forEach(function (image) {
+            if (image.src) {
+              image.src = new URL(image.src, link).href;
+              image.src = proxyURL + image.src;
+            }
+          });
+
+          // Prevent the page from navigating away
+          window.onbeforeunload = function (e) {
+            e.preventDefault();
+            alert("Navigation prevented: " + e.toString());
+          };
+
+          // Handle hash changes by redirecting through the proxy
+          function locationHashChanged(e) {
+            e.preventDefault();
+            window.location = fullURL;
+          }
+          window.onhashchange = locationHashChanged;
+        }
+      }
+
+      // Create a button to trigger the proxy loading
+      var button = document.createElement('button');
+      button.innerHTML = 'Load Website via Proxy';
+      button.style.cssText = `
+        font-family: Arial;
+        font-size: 16px;
+        color: #fff;
+        background-color: #333;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        cursor: pointer;
+      `;
+      button.onclick = loadWebsite;
+
+      // Append the button to the body
+      document.body.appendChild(button);
+    })();
+  </script>
+</body>
+</html>
