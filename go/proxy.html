@@ -8,6 +8,10 @@
       margin: 0;
       padding: 0;
       background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .bottom-left {
       position: fixed;
@@ -26,16 +30,29 @@
       height: 100%;
       border: none;
     }
+    #urlInput {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #333;
+    }
   </style>
 </head>
 <body>
   <div class="bottom-left">
   </div>
   <iframe id="websiteContent"></iframe>
-  <button id="loadButton">Load Website via Proxy</button>
+  <input type="text" id="urlInput" placeholder="Enter URL and press Enter">
   <script>
-    document.getElementById('loadButton').addEventListener('click', function () {
-      var link = prompt("Enter the URL:");
+    document.getElementById('urlInput').addEventListener('keyup', function(event) {
+      if (event.key === "Enter") {
+        loadWebsite();
+      }
+    });
+
+    function loadWebsite() {
+      var link = document.getElementById('urlInput').value;
       if (link) {
         var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
         var fullURL = proxyURL + encodeURI(link);
@@ -51,7 +68,7 @@
             console.error('Error loading website:', error);
           });
       }
-    });
+    }
   </script>
 </body>
 </html>
