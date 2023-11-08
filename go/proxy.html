@@ -18,7 +18,7 @@
       color: rgba(255, 255, 255, 0.2);
       padding: 10px;
     }
-    iframe {
+    #websiteContent {
       position: absolute;
       top: 0;
       left: 0;
@@ -31,7 +31,7 @@
 <body>
   <div class="bottom-left">
   </div>
-  <iframe id="websiteFrame"></iframe>
+  <iframe id="websiteContent"></iframe>
   <script>
     (function () {
       function loadWebsite() {
@@ -39,10 +39,17 @@
         if (link) {
           var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
           var fullURL = proxyURL + encodeURI(link);
-          
-          // Load the website in the iframe
-          var iframe = document.getElementById('websiteFrame');
-          iframe.src = fullURL;
+
+          // Fetch the website content
+          fetch(fullURL)
+            .then(response => response.text())
+            .then(data => {
+              var iframe = document.getElementById('websiteContent');
+              iframe.srcdoc = data; // Set the fetched content as srcdoc
+            })
+            .catch(error => {
+              console.error('Error loading website:', error);
+            });
         }
       }
 
