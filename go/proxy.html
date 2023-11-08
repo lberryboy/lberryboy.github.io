@@ -18,21 +18,31 @@
       color: rgba(255, 255, 255, 0.2);
       padding: 10px;
     }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 <body>
   <div class="bottom-left">
   </div>
+  <iframe id="websiteFrame"></iframe>
   <script>
     (function () {
       function loadWebsite() {
         var link = prompt("Enter the URL:");
         if (link) {
           var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
-          var fullURL = proxyURL + link;
-
-          // Load the website content within the same tab
-          window.location.href = fullURL;
+          var fullURL = proxyURL + encodeURI(link);
+          
+          // Load the website in the iframe
+          var iframe = document.getElementById('websiteFrame');
+          iframe.src = fullURL;
         }
       }
 
