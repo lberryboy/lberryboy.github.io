@@ -45,8 +45,13 @@
   <iframe id="websiteContent"></iframe>
   <input type="text" id="urlInput" placeholder="Enter URL and press Enter">
   <script>
+    document.getElementById('urlInput').addEventListener('click', function() {
+      this.removeAttribute('readonly');
+    });
+
     document.getElementById('urlInput').addEventListener('keyup', function(event) {
       if (event.key === "Enter") {
+        this.setAttribute('readonly', 'true');
         loadWebsite();
       }
     });
@@ -57,7 +62,7 @@
         var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
         var fullURL = proxyURL + encodeURI(link);
 
-        // Fetch the website content
+        // Fetch the website content, including CSS
         fetch(fullURL)
           .then(response => response.text())
           .then(data => {
