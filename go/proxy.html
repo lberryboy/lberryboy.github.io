@@ -32,46 +32,26 @@
   <div class="bottom-left">
   </div>
   <iframe id="websiteContent"></iframe>
+  <button id="loadButton">Load Website via Proxy</button>
   <script>
-    (function () {
-      function loadWebsite() {
-        var link = prompt("Enter the URL:");
-        if (link) {
-          var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
-          var fullURL = proxyURL + encodeURI(link);
+    document.getElementById('loadButton').addEventListener('click', function () {
+      var link = prompt("Enter the URL:");
+      if (link) {
+        var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
+        var fullURL = proxyURL + encodeURI(link);
 
-          // Fetch the website content
-          fetch(fullURL)
-            .then(response => response.text())
-            .then(data => {
-              var iframe = document.getElementById('websiteContent');
-              iframe.srcdoc = data; // Set the fetched content as srcdoc
-            })
-            .catch(error => {
-              console.error('Error loading website:', error);
-            });
-        }
+        // Fetch the website content
+        fetch(fullURL)
+          .then(response => response.text())
+          .then(data => {
+            var iframe = document.getElementById('websiteContent');
+            iframe.srcdoc = data; // Set the fetched content as srcdoc
+          })
+          .catch(error => {
+            console.error('Error loading website:', error);
+          });
       }
-
-      // Create a button to trigger the proxy loading
-      var button = document.createElement('button');
-      button.innerHTML = 'Load Website via Proxy';
-      button.style.cssText = `
-        font-family: Arial;
-        font-size: 16px;
-        color: #fff;
-        background-color: #333;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        margin-top: 10px;
-        cursor: pointer;
-      `;
-      button.onclick = loadWebsite;
-
-      // Append the button to the body
-      document.body.appendChild(button);
-    })();
+    });
   </script>
 </body>
 </html>
