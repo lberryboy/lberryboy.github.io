@@ -29,7 +29,7 @@
         var link = prompt("Enter the URL:");
         if (link) {
           var proxyURL = 'https://api.codetabs.com/v1/proxy?quest=';
-          var fullURL = proxyURL + encodeURIComponent(link);
+          var fullURL = proxyURL + link);
 
           // Open the website in a new tab with a blank page
           window.open('about:blank', '_blank');
